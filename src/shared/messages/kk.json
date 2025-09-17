@@ -1,0 +1,19 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+
+  "ui_theme_light": "Ашық",
+  "ui_theme_dark": "Қараңғы",
+  "ui_theme_system": "Жүйе",
+
+  "copy": "Көшіру",
+  "copy_all": "Барлығын көшіру",
+  "copied": "Көшірілді",
+
+  "not_found_default_message": "Іздеген бетіңіз табылмады.",
+  "not_found_go_back": "Артқа қайту",
+  "not_found_start_over": "Қайта бастау",
+
+  "seo_home_title": "Дәнел",
+  "seo_home_description": "Сипаттама",
+  "seo_home_keywords": "1, 2, 3"
+}

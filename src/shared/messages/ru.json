@@ -1,0 +1,19 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+
+  "ui_theme_light": "Светлая",
+  "ui_theme_dark": "Тёмная",
+  "ui_theme_system": "Системная",
+
+  "copy": "Скопировать",
+  "copy_all": "Копировать все",
+  "copied": "Скопировано",
+
+  "not_found_default_message": "Страница, которую вы ищете, не существует.",
+  "not_found_go_back": "Вернуться назад",
+  "not_found_start_over": "Начать заново",
+
+  "seo_home_title": "Данель",
+  "seo_home_description": "Описание",
+  "seo_home_keywords": "1, 2, 3"
+}
