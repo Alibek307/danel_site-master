@@ -1,3 +1,36 @@
 from django.contrib import admin
+from .models import Category, Product, Customer, Order, OrderItem
 
-# Register your models here.
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'created_at']
+    search_fields = ['name']
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'category', 'price', 'weight', 'is_available', 'created_at']
+    list_filter = ['category', 'is_available', 'created_at']
+    search_fields = ['name', 'description']
+    list_editable = ['price', 'is_available']
+    readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ['company_name', 'phone', 'email', 'created_at']
+    search_fields = ['company_name', 'phone', 'email']
+
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+    extra = 0
+    readonly_fields = ['total_price']
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ['id', 'customer', 'status', 'total_amount', 'delivery_date', 'created_at']
+    list_filter = ['status', 'created_at', 'delivery_date']
+    search_fields = ['customer_name', 'customer_phone']
+    inlines = [OrderItemInline]
+    readonly_fields = ['created_at', 'updated_at']
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('customer')
