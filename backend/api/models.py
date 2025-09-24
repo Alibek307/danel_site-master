@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
+from django.utils import timezone
 
 class Category(models.Model):
     name = models.CharField(max_length=100, verbose_name="Название")
@@ -16,7 +18,7 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название")
     description = models.TextField(verbose_name="Описание")
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Катергории")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name="Категории")
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена")
     image = models.ImageField(upload_to='products/', blank=True, null=True, verbose_name="Изображение")
     is_available = models.BooleanField(default=True, verbose_name="Доступен")
@@ -35,13 +37,26 @@ class Product(models.Model):
 class Customer(models.Model):
     company_name = models.CharField(max_length=100, verbose_name="Название компании")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
-    email = models.EmailField(blank=True, verbose_name="Email")
+    email = models.EmailField(unique=True, verbose_name="Email")
+    password = models.CharField(max_length=128, verbose_name="Пароль")
     address = models.TextField(verbose_name="Адрес")
+    is_active = models.BooleanField(default=True, verbose_name="Активен")
+    last_login = models.DateTimeField(null=True, blank=True, verbose_name="Последний вход")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "Клиент"
         verbose_name_plural = "Клиенты"
+    
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+    
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+    
+    def update_last_login(self):
+        self.last_login = timezone.now()
+        self.save(update_fields=['last_login'])
 
     def __str__(self):
         return f"{self.company_name} - {self.phone}"

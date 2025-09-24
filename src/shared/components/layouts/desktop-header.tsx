@@ -3,6 +3,7 @@ import { Monitor, Moon, Sun, Languages } from 'lucide-react';
 import { useTheme } from '@/shared/providers/theme-provider';
 import { getLocale, locales, setLocale } from 'src/paraglide/runtime';
 import { m } from 'src/paraglide/messages';
+import { ProfileMenu } from '../auth/profile-menu';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,6 +70,7 @@ export function DesktopHeader() {
 
           {/* Right side - Controls */}
           <div className="flex items-center gap-2">
+
             {/* Language Switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -118,6 +120,9 @@ export function DesktopHeader() {
                 })}
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Profile Menu */}
+            <ProfileMenu />
           </div>
         </div>
       </header>

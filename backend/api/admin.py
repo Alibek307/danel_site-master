@@ -16,8 +16,22 @@ class ProductAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['company_name', 'phone', 'email', 'created_at']
+    list_display = ['company_name', 'phone', 'email', 'is_active', 'created_at', 'last_login']
+    list_filter = ['is_active', 'created_at']
     search_fields = ['company_name', 'phone', 'email']
+    readonly_fields = ['password', 'created_at', 'last_login']
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('company_name', 'email', 'phone', 'address')
+        }),
+        ('Статус', {
+            'fields': ('is_active', 'last_login', 'created_at')
+        }),
+        ('Безопасность', {
+            'fields': ('password',),
+            'classes': ('collapse',)
+        }),
+    )
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem

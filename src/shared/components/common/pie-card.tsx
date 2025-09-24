@@ -2,9 +2,9 @@ import { Card, CardContent, GradientButton } from '@/shared/components';
 import { Plus } from 'lucide-react';
 
 export interface ProductData {
-  id: string;
+  id: number;
   name: string;
-  image: string;
+  image: string | null;
   ingredients: string[];
   price: number;
 }

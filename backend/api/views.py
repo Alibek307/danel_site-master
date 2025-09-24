@@ -1,16 +1,19 @@
-from rest_framework.decorators import api_view, action
-from rest_framework.response import Response
 from rest_framework import status, viewsets
+from rest_framework.decorators import api_view, action, permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.db import transaction
 from .models import Category, Product, Customer, Order, OrderItem
 from .serializers import (
     CategorySerializer, ProductSerializer, CustomerSerializer, 
-    OrderSerializer, CreateOrderSerializer
+    OrderSerializer, CreateOrderSerializer, CustomerRegistrationSerializer,
+    CustomerLoginSerializer, CustomerProfileSerializer
 )
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
-    serializer_class = ProductSerializer
+    serializer_class = CategorySerializer
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Product.objects.filter(is_available=True)
@@ -33,7 +36,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         status_param = self.request.query_params.get('status', None)
         if status_param is not None:
             queryset = queryset.filter(status=status_param)
-        return queryset.select_related('customer').prefetch_related('items_product')
+        return queryset.select_related('customer').prefetch_related('items__product')
     
     @action(detail=False, methods=['post'])
     def create_order(self, request):
@@ -79,7 +82,7 @@ class OrderViewSet(viewsets.ModelViewSet):
                     {'error': 'Один или несколько товаров не найдены'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     @action(detail=True, methods=['patch'])
     def update_status(self, request, pk=None):
@@ -95,6 +98,46 @@ class OrderViewSet(viewsets.ModelViewSet):
             {'error': 'Недопустимый статус'},
             status=status.HTTP_400_BAD_REQUEST
         )
+    
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register(request):
+    print("Received data:", request.data)
+    serializer = CustomerRegistrationSerializer(data=request.data)
+    if serializer.is_valid():
+        customer = serializer.save()
+
+        refresh = RefreshToken()
+        refresh['customer_id'] = customer.id
+
+        return Response({
+            'customer': CustomerProfileSerializer(customer).data,
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+        }, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def login(request):
+    serializer = CustomerLoginSerializer(data=request.data)
+    if serializer.is_valid():
+        customer = serializer.validated_data['customer']
+        customer.update_last_login()
+
+        refresh = RefreshToken()
+        refresh['customer_id'] = customer.id
+
+        return Response({
+            'customer': CustomerProfileSerializer(customer).data,
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+        })
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def api_overview(request):
