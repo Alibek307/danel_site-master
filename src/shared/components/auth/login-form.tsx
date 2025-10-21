@@ -128,7 +128,7 @@ export function LoginForm() {
                     type="button"
                     variant="link"
                     className="p-0 h-auto"
-                    onClick={() => router.navigate({ to: '/auth/login' })}
+                    onClick={() => router.navigate({ to: '/auth/register' })}
                 >
                     Зарегистрироваться
                 </Button>

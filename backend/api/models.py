@@ -71,8 +71,15 @@ class Order(models.Model):
         ('cancelled', 'Отменен'),
     ]
 
+    PAYMENT_CHOICES = [
+        ('cash', 'Наличными'),
+        ('card', 'Картой'),
+        ('kaspi', 'Kaspi.kz'),
+    ]
+
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, verbose_name="Клиент")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Статус")
+    payment_method = models.CharField(max_length=20, choices=PAYMENT_CHOICES, default='cash', verbose_name="Способ оплаты")
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Сумма заказа")
     delivery_date = models.DateTimeField(verbose_name="Дата доставки")
     notes = models.TextField(blank=True, verbose_name="Примечания")

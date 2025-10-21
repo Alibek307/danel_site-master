@@ -2,22 +2,22 @@ import { redirect } from '@tanstack/react-router';
 import { useAuthStore } from '../stores/useAuthStore';
 
 export const requireAuth = () => {
-    const { isAuthenticated } = useAuthStore.getState();
+    const authStore = useAuthStore.getState();
 
-    if (!isAuthenticated) {
+    if (!authStore.tokens?.access || !authStore.user) {
         throw redirect({
             to: '/auth/login',
             search: {
-                redirect: location.pathname,
+                redirect: window.location.href,
             },
         });
     }
 };
 
 export const requireGuest = () => {
-    const { isAuthenticated } = useAuthStore.getState();
+    const authStore = useAuthStore.getState();
 
-    if(isAuthenticated) {
+    if(authStore.tokens?.access && authStore.user) {
         throw redirect({
             to: '/',
         });

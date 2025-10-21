@@ -9,7 +9,6 @@ interface AuthStore {
     login: (email: string, password: string) => Promise<void>;
     register: (data: RegisterRequest) => Promise<void>;
     logout: () => void;
-    isAuthenticated: boolean;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -17,10 +16,6 @@ export const useAuthStore = create<AuthStore>()(
         (set, get) => ({
             user: null,
             tokens: null,
-
-            get isAuthenticated() {
-                return  !!get().tokens?.access;
-            },
             
             login: async (email: string, password: string) => {
                 const response = await authApi.login({ email, password });

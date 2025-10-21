@@ -30,5 +30,6 @@
     "urlset",
     "vcard",
     "webp"
-  ]
+  ],
+  "python-envs.pythonProjects": []
 }

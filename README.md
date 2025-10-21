@@ -16,6 +16,13 @@ From your terminal:
 pnpm install
 pnpm dev
 ```
+Backend setup
+
+```sh
+cd backend
+source venv/Scripts/Activate
+pip install -r requirements.txt
+```
 
 This starts your app in development mode, rebuilding assets on file changes.
 

@@ -42,6 +42,7 @@ class CreateOrderSerializer(serializers.Serializer):
         child=serializers.DictField()
     )
     delivery_date = serializers.DateTimeField()
+    payment_method = serializers.CharField(required=False, default='cash')
     notes = serializers.CharField(required=False, allow_blank=True)
 
 class CustomerRegistrationSerializer(serializers.ModelSerializer):
@@ -59,8 +60,9 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         validated_data.pop('password_confirm')
+        password = validated_data.pop('password')
         customer = Customer(**validated_data)
-        customer.set_password(validated_data['password'])
+        customer.set_password(password)
         customer.save()
         return customer
 

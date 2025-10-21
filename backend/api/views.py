@@ -55,6 +55,7 @@ class OrderViewSet(viewsets.ModelViewSet):
                     order = Order.objects.create(
                         customer=customer,
                         delivery_date=serializer.validated_data['delivery_date'],
+                        payment_method = serializer.validated_data.get('payment_method', 'cash'),
                         notes=serializer.validated_data.get('notes', ''),
                         total_amount=0
                     )

@@ -9,6 +9,7 @@ import {
   Separator 
 } from '@/shared/components';
 import { ShoppingCart, Plus, Minus, Trash2 } from 'lucide-react';
+import { useNavigate } from '@tanstack/react-router';
 
 interface CartSheetProps {
   trigger?: React.ReactNode;
@@ -28,6 +29,7 @@ export function CartSheet({ trigger }: CartSheetProps) {
 
   const totalItems = getTotalItems();
   const totalPrice = getTotalPrice();
+  const navigate = useNavigate();
 
   const defaultTrigger = (
     <div className="relative">
@@ -160,6 +162,10 @@ export function CartSheet({ trigger }: CartSheetProps) {
                     className="w-full px-4 py-3 font-semibold"
                     decorative
                     decorativeColor="purple"
+                    onClick={() => {
+                      setIsOpen(false);
+                      navigate({ to: '/checkout' });
+                    }}
                   >
                     Заказать
                   </GradientButton>

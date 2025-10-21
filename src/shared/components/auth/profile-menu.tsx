@@ -1,5 +1,6 @@
 import { User, LogOut, Settings } from 'lucide-react';
 import { useRouter } from '@tanstack/react-router';
+import { useAuth } from '@/shared/hooks/useAuth';
 import { useAuthStore } from '@/shared/stores/useAuthStore';
 import {
     DropdownMenu,
@@ -12,7 +13,7 @@ import {
 } from '../shadcn';
 
 export function ProfileMenu() {
-    const { user, isAuthenticated, logout } = useAuthStore();
+    const { user, isAuthenticated, logout } = useAuth();
     const router = useRouter();
 
     if (!isAuthenticated) {

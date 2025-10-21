@@ -37,6 +37,7 @@ export interface CreateOrderData {
     customer: Customer;
     items: OrderItem[];
     delivery_date: string;
+    payment_method?: string;
     notes?: string;
 }
 
