@@ -184,13 +184,3 @@ body {
   }
 }
 
-/* QR Code Generator Styles */
-@layer components {
-  .qr-container svg {
-    @apply max-w-full max-h-full w-auto h-auto border border-border rounded-lg;
-  }
-  
-  .qr-generator {
-    @apply space-y-6;
-  }
-}

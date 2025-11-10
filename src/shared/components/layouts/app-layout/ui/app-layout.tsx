@@ -3,7 +3,9 @@ import { PropsWithChildren } from 'react';
 import { AppSidebar } from './sidebar';
 import { MobileHeader } from '../../mobile-header';
 import { DesktopHeader } from '../../desktop-header';
+import { Footer } from '../../footer';
 import { useIsMobile } from '@/shared/hooks';
+import { PageWrapper } from '../../page-wrapper';
 
 export function AppLayout({ children }: PropsWithChildren) {
   const isMobile = useIsMobile();
@@ -18,24 +20,32 @@ export function AppLayout({ children }: PropsWithChildren) {
           } as React.CSSProperties
         }>
         <AppSidebar />
-        <SidebarInset className="p-0">
+        <SidebarInset className="p-0 flex flex-col min-h-screen">
           <MobileHeader />
-          <div className="pt-14">
-            {children}
+          <div className="pt-14 flex-1">
+            <PageWrapper>
+              {children}
+            </PageWrapper>
           </div>
+          <Footer />
         </SidebarInset>
         <Toaster />
       </SidebarProvider>
+      
     );
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <DesktopHeader />
-      <main className="pt-28 p-2">
-        {children}
+      <main className="flex-1">
+        <PageWrapper>
+          {children}
+        </PageWrapper>
       </main>
+      <Footer />
       <Toaster />
     </div>
   );
 }
+

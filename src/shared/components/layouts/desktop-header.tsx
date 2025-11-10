@@ -1,9 +1,10 @@
-import { Link } from '@tanstack/react-router';
+import { Link, useLocation } from '@tanstack/react-router';
 import { Monitor, Moon, Sun, Languages } from 'lucide-react';
 import { useTheme } from '@/shared/providers/theme-provider';
 import { getLocale, locales, setLocale } from 'src/paraglide/runtime';
 import { m } from 'src/paraglide/messages';
 import { ProfileMenu } from '../auth/profile-menu';
+import { useCategories } from '@/shared/hooks/useProduct';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,18 +27,16 @@ const languageLabels = {
   ru: 'Русский',
 } as const;
 
-// Categories for navigation
-const categories = [
-  { id: 'pies', name: 'Пироги', href: '#pies' },
-  { id: 'salads', name: 'Салаты', href: '#salads' },
-  { id: 'hot', name: 'Горячее', href: '#hot' },
-  { id: 'snacks', name: 'Закуски', href: '#snacks' },
-  { id: 'cakes', name: 'Торты', href: '#cakes' },
-];
-
 export function DesktopHeader() {
   const { theme, setTheme } = useTheme();
   const currentLocale = getLocale();
+  const location = useLocation();
+
+  // Загружаем категорию из API
+  const { data: categories = [], isLoading } = useCategories();
+
+  // Проверяем, находимся ли мы на главной странице
+  const isHomePage = location.pathname === '/' || location.pathname === '//kk';
 
   // Get theme configuration
   const currentThemeConfig = themeConfig[theme] || themeConfig.system;
@@ -127,33 +126,38 @@ export function DesktopHeader() {
         </div>
       </header>
 
-      {/* Sticky navigation bar */}
-      <nav className="fixed top-[57px] left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
-        <div className="container mx-auto flex items-center py-3 relative">
-          {/* Categories navigation - centered vertically and horizontally */}
-          <div className="flex gap-6">
-            {categories.map((category) => (
-              <a
-                key={category.id}
-                href={category.href}
-                className="text-sm font-medium hover:text-primary transition-colors px-2 py-1 rounded-md hover:bg-accent scroll-smooth"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const element = document.getElementById(category.id);
-                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }}
-              >
-                {category.name}
-              </a>
-            ))}
+      {/* Sticky navigation bar - показывать только на главной странице */}
+      {isHomePage && (
+        <nav className="fixed top-[57px] left-0 right-0 z-40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+          <div className="container mx-auto flex items-center py-3 relative">
+            {/* Categories navigation - из API */}
+            {isLoading ? (
+              <div className='text-sm text-muted-foreground'>Загрузка...</div>
+            ) : (
+              <div className="flex gap-6">
+                {categories.map((category) => (
+                  <a
+                    key={category.id}
+                    href={`#category-${category.id}`}
+                    className="text-sm font-medium hover:text-primary transition-colors px-2 py-1 rounded-md hover:bg-accent scroll-smooth"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const element = document.getElementById(`category-${category.id}`);
+                      element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }}
+                  >
+                    {category.name}
+                  </a>
+                ))}
+              </div>
+            )}
+            {/* Cart button - positioned to the right */}
+            <div className="absolute right-0">
+              <CartSheet />
+            </div>
           </div>
-
-          {/* Cart button - positioned to the right */}
-          <div className="absolute right-0">
-            <CartSheet />
-          </div>
-        </div>
-      </nav>
+        </nav>
+      )}
     </>
   );
 }
