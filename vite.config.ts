@@ -31,7 +31,7 @@ export default defineConfig({
       ],
     }),
     tanstackStart({
-      target: 'vercel',
+      target: 'node-server',
       customViteReactPlugin: true,
     }),
   ],
