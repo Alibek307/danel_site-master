@@ -1,19 +1,12 @@
 {
-  "name": "jasalab",
+  "name": "danel",
   "version": "1.0.0",
-  "description": "JasaLab - Free online tools collection including generators, calculators, converters and utilities. QR code generator, password generator, color palette tools and more.",
+  "description": "Danel - Система заказа продуктов питания для бизнеса",
   "author": {
-    "name": "Magiyar Amangaliev",
-    "email": "magiyar.aman@gmail.com",
-    "url": "https://github.com/mag1yar"
+    "name": "Alibek Kumashov",
+    "email": "alibek307kz@gmail.com",
+    "url": "https://github.com/Alibek307"
   },
-  "contributors": [
-    {
-      "name": "Alibek Kumashov",
-      "email": "alibek307kz@gmail.com",
-      "url": "https://github.com/Alibek307"
-    }
-  ],
   "homepage": "https://www.jasalab.com",
   "repository": {
     "type": "git",

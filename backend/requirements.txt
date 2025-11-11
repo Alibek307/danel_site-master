@@ -1,9 +1,23 @@
+# Core Django
 asgiref==3.9.1
 Django==5.2.6
-django-cors-headers==4.8.0
-djangorestframework==3.16.1
-pillow==11.3.0
-python-decouple==3.8
 sqlparse==0.5.3
 tzdata==2025.2
+
+# Django REST Framework
+djangorestframework==3.16.1
 djangorestframework-simplejwt==5.3.0
+PyJWT==2.8.0
+
+# CORS
+django-cors-headers==4.8.0
+
+# Image processing
+pillow==11.3.0
+
+# Environment variables
+python-decouple==3.8
+
+# Production server (опционально)
+gunicorn==21.2.0
+whitenoise==6.6.0
