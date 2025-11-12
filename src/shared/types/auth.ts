@@ -1,6 +1,6 @@
 export interface User {
     id: number;
-    company_name: string;
+    name: string;
     phone: string;
     email: string;
     address: string;
@@ -15,7 +15,7 @@ export interface LoginRequest {
 }
 
 export interface RegisterRequest {
-    company_name: string;
+    name: string;
     phone: string;
     email: string;
     password: string;

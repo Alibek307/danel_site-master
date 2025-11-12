@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             name='Customer',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('company_name', models.CharField(max_length=100, verbose_name='Название компании')),
+                ('name', models.CharField(max_length=100, verbose_name='Имя')),
                 ('phone', models.CharField(max_length=20, verbose_name='Телефон')),
                 ('email', models.EmailField(blank=True, max_length=254, verbose_name='Email')),
                 ('address', models.TextField(verbose_name='Адрес')),

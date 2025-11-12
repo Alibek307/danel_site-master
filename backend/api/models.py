@@ -35,7 +35,7 @@ class Product(models.Model):
         return self.name
 
 class Customer(models.Model):
-    company_name = models.CharField(max_length=100, verbose_name="Название компании")
+    name = models.CharField(max_length=100, verbose_name="Имя")
     phone = models.CharField(max_length=20, verbose_name="Телефон")
     email = models.EmailField(unique=True, verbose_name="Email")
     password = models.CharField(max_length=128, verbose_name="Пароль")
@@ -59,7 +59,7 @@ class Customer(models.Model):
         self.save(update_fields=['last_login'])
 
     def __str__(self):
-        return f"{self.company_name} - {self.phone}"
+        return f"{self.name} - {self.phone}"
 
 class Order(models.Model):
     STATUS_CHOICES = [
@@ -92,7 +92,7 @@ class Order(models.Model):
         ordering = ['-created_at']
     
     def __str__(self):
-        return f"Заказ #{self.id} - {self.customer.company_name}"
+        return f"Заказ #{self.id} - {self.customer.name}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE, verbose_name="Заказ")

@@ -14,7 +14,7 @@ export function RegistrationFrom() {
 
     const form = useForm({
         defaultValues: {
-            company_name: '',
+            name: '',
             phone: '',
             email: '',
             password: '',
@@ -51,11 +51,11 @@ export function RegistrationFrom() {
         >
             <div className='space-y-6'>
                 <form.Field 
-                    name="company_name"
+                    name="name"
                     validators={{
                         onChange: ({ value }) =>
                             !value
-                                ? 'Название компании обязательно'
+                                ? 'Имя обязательно'
                                 : value.length < 2
                                 ? 'Название должно содержать минимум 2 символа'
                                 : undefined,  
@@ -63,14 +63,14 @@ export function RegistrationFrom() {
                 >
                     {(field) => (
                         <div className='space-y-2'>
-                            <Label htmlFor={field.name}>Название компании</Label>
+                            <Label htmlFor={field.name}>Имя</Label>
                             <Input
                                 id={field.name}
                                 name={field.name}
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                placeholder='Моя компания'
+                                placeholder='Имя'
                                 disabled={isLoading}
                                 aria-invalid={!!field.state.meta.errors.length}
                             />

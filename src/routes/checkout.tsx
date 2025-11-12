@@ -69,7 +69,7 @@ function CheckoutPage() {
         const orderData: CreateOrderData = {
           customer: {
             id: user.id,
-            company_name: user.company_name,
+            name: user.name,
             phone: user.phone,
             email: user.email,
             address: user.address,
@@ -148,7 +148,7 @@ function CheckoutPage() {
               <div className='space-y-3 text-sm'>
                 <div>
                   <span className='text-muted-foreground'>Компания:</span>{' '}
-                  <span className='font-medium'>{user?.company_name}</span>
+                  <span className='font-medium'>{user?.name}</span>
                 </div>
                 <div>
                   <span className='text-muted-foreground'>Телефон:</span>{' '}

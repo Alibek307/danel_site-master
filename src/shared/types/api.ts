@@ -22,7 +22,7 @@ export interface Product {
 
 export interface Customer {
     id?: number;
-    company_name: string;
+    name: string;
     phone: string;
     email?: string;
     address: string;

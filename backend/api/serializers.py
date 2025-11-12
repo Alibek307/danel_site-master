@@ -51,7 +51,7 @@ class CustomerRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['company_name', 'email', 'phone', 'address', 'password', 'password_confirm']
+        fields = ['name', 'email', 'phone', 'address', 'password', 'password_confirm']
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password_confirm']:
@@ -88,5 +88,5 @@ class CustomerLoginSerializer(serializers.Serializer):
 class CustomerProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ['id', 'company_name', 'email', 'phone', 'address', 'created_at', 'last_login']
+        fields = ['id', 'name', 'email', 'phone', 'address', 'created_at', 'last_login']
         read_only_fields = ['id', 'created_at', 'last_login']
