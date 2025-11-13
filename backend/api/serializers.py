@@ -37,7 +37,7 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CreateOrderSerializer(serializers.Serializer):
-    customer = CustomerSerializer()
+    customer = serializers.DictField()
     items = serializers.ListField(
         child=serializers.DictField()
     )
@@ -78,10 +78,10 @@ class CustomerLoginSerializer(serializers.Serializer):
             customer = Customer.objects.get(email=email, is_active=True)
         except Customer.DoesNotExist:
             raise serializers.ValidationError("Неверные учетные данные")
-        
+
         if not customer.check_password(password):
             raise serializers.ValidationError("Неверные учетные данные")
-        
+
         attrs['customer'] = customer
         return attrs
 
@@ -90,3 +90,28 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ['id', 'name', 'email', 'phone', 'address', 'created_at', 'last_login']
         read_only_fields = ['id', 'created_at', 'last_login']
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = ['name', 'address']
+    
+    def validate_name(self, value):
+        if not value or len(value.strip()) == 0:
+            raise serializers.ValidationError("Имя не может быть пустым")
+        return value
+    
+    def validate_address(self, value):
+        if not value or len(value.strip()) == 0:
+            raise serializers.ValidationError("Адрес не может быть пустым")
+        return value
+    
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(required=True, write_only=True, min_length=8)
+    new_password_confirm = serializers.CharField(required=True, write_only=True)
+
+    def validate(self, attrs):
+        if attrs['new_password'] != attrs['new_password_confirm']:
+            raise serializers.ValidationError("Новые пароли не совпадают")
+        return attrs

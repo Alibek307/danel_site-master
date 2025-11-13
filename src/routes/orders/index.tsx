@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useAuthStore } from "@/shared/stores/useAuthStore";
 import { useQuery } from "@tanstack/react-query";
 import { ordersApi } from "@/shared/api/services";

@@ -93,6 +93,10 @@ class Order(models.Model):
     
     def __str__(self):
         return f"Заказ #{self.id} - {self.customer.name}"
+    
+    @property
+    def order_number(self):
+        return f"#{str(self.id).zfill(5)}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE, verbose_name="Заказ")
@@ -109,4 +113,6 @@ class OrderItem(models.Model):
     
     @property
     def total_price(self):
-        return self.price * self.quantity
+        if self.price is not None and self.quantity is not None:
+            return self.price * self.quantity
+        return 0

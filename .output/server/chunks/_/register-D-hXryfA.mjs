@@ -1,8 +1,9 @@
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useState } from 'react';
-import { u as useForm, L as Label, I as Input } from './useForm-sRtwS_Vh.mjs';
+import { u as useForm, L as Label } from './useForm-CSs12aQO.mjs';
 import { useRouter } from '@tanstack/react-router';
 import { a as useAuthStore, B as Button } from './ssr.mjs';
+import { I as Input } from './input-CXqKeBqH.mjs';
 import { toast } from 'sonner';
 import '@radix-ui/react-label';
 import '@tanstack/react-query';
@@ -221,7 +222,7 @@ function RegistrationFrom() {
                     value: field.state.value,
                     onBlur: field.handleBlur,
                     onChange: (e) => field.handleChange(e.target.value),
-                    placeholder: "\u0433. \u0410\u043B\u043C\u0430\u0442\u044B, \u0443\u043B. \u0410\u0431\u0430\u044F 123",
+                    placeholder: "\u0433. \u0410\u0441\u0442\u0430\u043D\u0430, \u0443\u043B. \u0410\u0431\u0430\u044F 123",
                     disabled: isLoading,
                     "aria-invalid": !!field.state.meta.errors.length
                   }
@@ -276,4 +277,4 @@ const SplitComponent = function RegisterPage() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=register-h6iiJI6t.mjs.map
+//# sourceMappingURL=register-D-hXryfA.mjs.map

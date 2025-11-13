@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router';
 import { Mail, Phone, MapPin, Instagram } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { m } from 'src/paraglide/messages';
 
 export function Footer() {
@@ -13,14 +14,14 @@ export function Footer() {
                     <div>
                         <h3 className='text-lg font-semibold mb-4'>Danel</h3>
                         <p className='text-sm text-muted-foreground mb-4'>
-                            Система заказа продкутов для бизнеса. Качественная продукция с доставкой.
+                            Система заказа продуктов для бизнеса. Качественная продукция с доставкой.
                         </p>
                     </div>
 
                     {/* Контакты */}
                     <div>
                         <h3 className='text-lg font-semibold mb-4'>Контакты</h3>
-                        <div className='sapce-y-3'>
+                        <div className='space-y-2'>
                             <a
                                 href="tel:+77001234567"
                                 className='flex items-center gap-2 text-sm text-muted-foregound hover:text-primary transition-colors'
@@ -29,31 +30,47 @@ export function Footer() {
                                 +7 (700) 123-45-67
                             </a>
                             <a
-                                href="malito:info@danel.kz"
+                                href="mailto:info@danel.kz"
                                 className='flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors'
                             >
                                 <Mail className='w-4 h-4' />
                                 info@danel.kz
                             </a>
                             <a
+                                href="https://wa.me/77475115555"
+                                target="_blank"
+                                rel='noopener noreferrer'
+                                className='flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors'
+                            >
+                                <MessageCircle className='w-4 h-4' />
+                                WhatsApp
+                            </a>
+                            <a
                                 href="https://www.instagram.com/pirogi_danel_astana/"
                                 target="_blank"
-                                rel='noopener onreferrer'
+                                rel='noopener noreferrer'
                                 className='flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors'
                             >
                                 <Instagram className='w-4 h-4' />
-                                @danel.kz
+                                @pirogi_danel_astana
                             </a>
                         </div>
                     </div>
 
                     {/* Адрес */}
                     <div>
-                        <h3 className='text-lg font-semibold mb-4'>Адрес</h3>
-                        <div className='flex items-center gap-2 text-sm text-muted-foreground'>
-                            <MapPin className='w-4 h-4' />
-                            <span>Казахстан, г. Астана, ул. Сыганак 54а, БЦ "А"</span>
-                        </div>
+                            <h3 className='text-lg font-semibold mb-4'>Адрес</h3>
+                            <div className='flex items-center gap-2 text-sm text-muted-foreground'>
+                                <a 
+                                    href="https://www.instagram.com/pirogi_danel_astana/"
+                                    target="_blank"
+                                    rel='noopener onreferrer'
+                                    className='flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors'
+                                >
+                                    <MapPin className='w-4 h-4' />
+                                    <span>Казахстан, г. Астана, ул. Сыганак 54а, БЦ "А"</span>
+                                </a>
+                            </div>
                     </div>
 
                     { /* Навигация */}

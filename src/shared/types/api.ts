@@ -31,10 +31,11 @@ export interface Customer {
 export interface OrderItem {
     product_id: number;
     quantity: number;
+    price: string;
 }
 
 export interface CreateOrderData {
-    customer: Customer;
+    customer: Customer | { id: number };
     items: OrderItem[];
     delivery_date: string;
     payment_method?: string;

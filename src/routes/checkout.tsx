@@ -8,7 +8,6 @@ import { GradientButton } from '@/shared/components';
 import { toast } from 'sonner';
 import { useState } from 'react';
 import { Calendar, ShoppingCart, User, MapPin, Clock } from 'lucide-react';
-import type { CreateOrderData } from '@/shared/types/api';
 
 // Экспорт маршрута с проверкой авторизации
 export const Route = createFileRoute('/checkout')({
@@ -58,27 +57,22 @@ function CheckoutPage() {
 
       // Проверяем что корзина не пуста
       if (items.length === 0) {
-        toast.error('Корзина пуста')
+        toast.error('Корзина пуста');
         return;
       }
 
       setIsLoading(true);
-      try{
+      try {
         const deliveryDateTime = `${value.delivery_date}T${value.delivery_time}:00`;
 
-        const orderData: CreateOrderData = {
-          customer: {
-            id: user.id,
-            name: user.name,
-            phone: user.phone,
-            email: user.email,
-            address: user.address,
-          },
-          items: items.map(item => ({
-            product_id: parseInt(item.id),
+        const orderData = {
+          customer: user ? { id: user.id } : undefined,
+          items: items.map((item) => ({
+            product_id: Number(item.id),
             quantity: item.quantity,
+            price: item.price.toString(),
           })),
-          delivery_date: new Date(value.delivery_date).toISOString(),
+          delivery_date: deliveryDateTime,
           payment_method: value.payment_method,
           notes: value.notes,
         };
@@ -186,35 +180,46 @@ function CheckoutPage() {
                   validators={{
                     onChange: ({ value }) => {
                       if (!value) return 'Выберите дату доставки';
-
-                      const selectedDate = new Date(value);
-                      const today = new Date();
-                      today.setHours(0, 0, 0, 0);
-
-                      if (selectedDate <= today) {
-                        return 'Минимальная дата доставки - завтра';
-                      }
                       return undefined;
                     },
                   }}
                 >
                   {(field) => (
-                    <div className='space-y-2'>
-                      <Label htmlFor={field.name}>
+                    <div className='space-y-3'>
+                      <Label>
                         <Calendar className='w-4 h-4 inline mr-2' />
-                        Дата доставки *
+                        Выберите дату доставки *
                       </Label>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        type="date"
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        min={minDateString}
-                        disabled={isLoading}
-                        aria-invalid={!!field.state.meta.errors.length}
-                      />
+                      <div className='grid grid-cols-5 gap-2'>
+                        {[1, 2, 3, 4, 5].map((dayOffset) => {
+                          const date = new Date();
+                          date.setDate(date.getDate() + dayOffset);
+                          const dateString = date.toISOString().split('T')[0];
+
+                          const dayLabel = dayOffset === 1 ? 'Завтра' : date.getDate().toString();
+                          const monthNames = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+                          const monthLabel = monthNames[date.getMonth()];
+                          
+                          const isSelected = field.state.value === dateString;
+
+                          return (
+                            <button
+                              key={dayOffset}
+                              type="button"
+                              onClick={() => field.handleChange(dateString)}
+                              disabled={isLoading}
+                              className={`flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${
+                                isSelected
+                                  ? 'border-purple-500 bg-purple-500/10 ring-2 ring-purple-500/20'
+                                  : 'border-input hover:border-purple-300 hover:bg-accent'
+                              } ${isLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                            >
+                              <span className='text-xs text-muted-foreground mb-1'>{monthLabel}</span>
+                              <span className='text-lg font-semibold'>{dayLabel}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
                       {/* Показываем ошибки валидации */}
                       {field.state.meta.errors && (
                         <p className='text-sm text-destructive'>

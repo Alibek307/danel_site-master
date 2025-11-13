@@ -1,6 +1,6 @@
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useNavigate } from '@tanstack/react-router';
-import { u as useForm, L as Label, I as Input } from './useForm-sRtwS_Vh.mjs';
+import { u as useForm, L as Label } from './useForm-CSs12aQO.mjs';
 import { u as useCartStore, a as useAuthStore, G as GradientButton, o as ordersApi, c as cn } from './ssr.mjs';
 import { toast } from 'sonner';
 import { useState } from 'react';
@@ -84,18 +84,15 @@ const SplitComponent = function CheckoutPage() {
       try {
         const deliveryDateTime = `${value.delivery_date}T${value.delivery_time}:00`;
         const orderData = {
-          customer: {
-            id: user.id,
-            name: user.name,
-            phone: user.phone,
-            email: user.email,
-            address: user.address
-          },
+          customer: user ? {
+            id: user.id
+          } : void 0,
           items: items.map((item) => ({
-            product_id: parseInt(item.id),
-            quantity: item.quantity
+            product_id: Number(item.id),
+            quantity: item.quantity,
+            price: item.price.toString()
           })),
-          delivery_date: new Date(value.delivery_date).toISOString(),
+          delivery_date: deliveryDateTime,
           payment_method: value.payment_method,
           notes: value.notes
         };
@@ -132,7 +129,7 @@ const SplitComponent = function CheckoutPage() {
   }
   const minDate = /* @__PURE__ */ new Date();
   minDate.setDate(minDate.getDate() + 1);
-  const minDateString = minDate.toISOString().split("T")[0];
+  minDate.toISOString().split("T")[0];
   return /* @__PURE__ */ jsx("div", { className: "container mx-auto px-6 py-8", children: /* @__PURE__ */ jsxs("div", { className: "max-w-5xl mx-auto", children: [
     /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold mb-8", children: "\u041E\u0444\u043E\u0440\u043C\u043B\u0435\u043D\u0438\u044F \u0437\u0430\u043A\u0430\u0437\u0430" }),
     /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-8", children: [
@@ -179,20 +176,26 @@ const SplitComponent = function CheckoutPage() {
                 value
               }) => {
                 if (!value) return "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0430\u0442\u0443 \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0438";
-                const selectedDate = new Date(value);
-                const today = /* @__PURE__ */ new Date();
-                today.setHours(0, 0, 0, 0);
-                if (selectedDate <= today) {
-                  return "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0434\u0430\u0442\u0430 \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0438 - \u0437\u0430\u0432\u0442\u0440\u0430";
-                }
                 return void 0;
               }
-            }, children: (field) => /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-              /* @__PURE__ */ jsxs(Label, { htmlFor: field.name, children: [
+            }, children: (field) => /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+              /* @__PURE__ */ jsxs(Label, { children: [
                 /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4 inline mr-2" }),
-                "\u0414\u0430\u0442\u0430 \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0438 *"
+                "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0434\u0430\u0442\u0443 \u0434\u043E\u0441\u0442\u0430\u0432\u043A\u0438 *"
               ] }),
-              /* @__PURE__ */ jsx(Input, { id: field.name, name: field.name, type: "date", value: field.state.value, onBlur: field.handleBlur, onChange: (e) => field.handleChange(e.target.value), min: minDateString, disabled: isLoading, "aria-invalid": !!field.state.meta.errors.length }),
+              /* @__PURE__ */ jsx("div", { className: "grid grid-cols-5 gap-2", children: [1, 2, 3, 4, 5].map((dayOffset) => {
+                const date = /* @__PURE__ */ new Date();
+                date.setDate(date.getDate() + dayOffset);
+                const dateString = date.toISOString().split("T")[0];
+                const dayLabel = dayOffset === 1 ? "\u0417\u0430\u0432\u0442\u0440\u0430" : date.getDate().toString();
+                const monthNames = ["\u044F\u043D\u0432", "\u0444\u0435\u0432", "\u043C\u0430\u0440", "\u0430\u043F\u0440", "\u043C\u0430\u0439", "\u0438\u044E\u043D", "\u0438\u044E\u043B", "\u0430\u0432\u0433", "\u0441\u0435\u043D", "\u043E\u043A\u0442", "\u043D\u043E\u044F", "\u0434\u0435\u043A"];
+                const monthLabel = monthNames[date.getMonth()];
+                const isSelected = field.state.value === dateString;
+                return /* @__PURE__ */ jsxs("button", { type: "button", onClick: () => field.handleChange(dateString), disabled: isLoading, className: `flex flex-col items-center justify-center p-3 rounded-lg border-2 transition-all ${isSelected ? "border-purple-500 bg-purple-500/10 ring-2 ring-purple-500/20" : "border-input hover:border-purple-300 hover:bg-accent"} ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`, children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-xs text-muted-foreground mb-1", children: monthLabel }),
+                  /* @__PURE__ */ jsx("span", { className: "text-lg font-semibold", children: dayLabel })
+                ] }, dayOffset);
+              }) }),
               field.state.meta.errors && /* @__PURE__ */ jsx("p", { className: "text-sm text-destructive", children: field.state.meta.errors[0] })
             ] }) }),
             /* @__PURE__ */ jsx(form.Field, { name: "delivery_time", validators: {
@@ -314,4 +317,4 @@ const SplitComponent = function CheckoutPage() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=checkout-DUpguBvC.mjs.map
+//# sourceMappingURL=checkout-DnUfZpLX.mjs.map

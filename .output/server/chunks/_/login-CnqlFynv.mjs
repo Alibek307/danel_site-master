@@ -1,6 +1,7 @@
 import { jsx, jsxs } from 'react/jsx-runtime';
-import { u as useForm, L as Label, I as Input } from './useForm-sRtwS_Vh.mjs';
+import { u as useForm, L as Label } from './useForm-CSs12aQO.mjs';
 import { a as useAuthStore, B as Button } from './ssr.mjs';
+import { I as Input } from './input-CXqKeBqH.mjs';
 import { useState } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { toast } from 'sonner';
@@ -162,4 +163,4 @@ const SplitComponent = function LoginPage() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=login-D6TG9eVv.mjs.map
+//# sourceMappingURL=login-CnqlFynv.mjs.map

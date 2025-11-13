@@ -1,24 +1,38 @@
 {
   "C:/Users/Admin/Documents/GitHub/danel_site-master/src/shared/styles/app.css": {
-    "file": "assets/app-C4GfVY-C.css",
+    "file": "assets/app-Crk2hFOV.css",
     "src": "C:/Users/Admin/Documents/GitHub/danel_site-master/src/shared/styles/app.css"
   },
-  "_clock-hbaKcCcr.js": {
-    "file": "assets/clock-hbaKcCcr.js",
+  "_card-D9YP67Ot.js": {
+    "file": "assets/card-D9YP67Ot.js",
+    "name": "card",
+    "imports": [
+      "src/client.tsx"
+    ]
+  },
+  "_clock-BNKicMoG.js": {
+    "file": "assets/clock-BNKicMoG.js",
     "name": "clock",
     "imports": [
       "src/client.tsx"
     ]
   },
-  "_shopping-bag-CxxLREjg.js": {
-    "file": "assets/shopping-bag-CxxLREjg.js",
+  "_input-z8qAEBEG.js": {
+    "file": "assets/input-z8qAEBEG.js",
+    "name": "input",
+    "imports": [
+      "src/client.tsx"
+    ]
+  },
+  "_shopping-bag-BB-ptptD.js": {
+    "file": "assets/shopping-bag-BB-ptptD.js",
     "name": "shopping-bag",
     "imports": [
       "src/client.tsx"
     ]
   },
-  "_useForm-CFfGqZw2.js": {
-    "file": "assets/useForm-CFfGqZw2.js",
+  "_useForm-CcPXm2vi.js": {
+    "file": "assets/useForm-CcPXm2vi.js",
     "name": "useForm",
     "imports": [
       "src/client.tsx"
@@ -313,13 +327,14 @@
     "src": "node_modules/.pnpm/@fontsource+rubik@5.2.6/node_modules/@fontsource/rubik/files/rubik-latin-ext-900-normal.woff2"
   },
   "src/client.tsx": {
-    "file": "assets/main-DRxoYVQ_.js",
+    "file": "assets/main-CCPV2-vA.js",
     "name": "main",
     "src": "src/client.tsx",
     "isEntry": true,
     "dynamicImports": [
       "src/routes/checkout.tsx?tsr-split=component",
       "src/routes/index.tsx?tsr-split=component",
+      "src/routes/profile/index.tsx?tsr-split=component",
       "src/routes/orders/index.tsx?tsr-split=component",
       "src/routes/orders/success.tsx?tsr-split=component",
       "src/routes/auth/register.tsx?tsr-split=component",
@@ -329,7 +344,7 @@
       "assets/main-QjeIf73C.css"
     ],
     "assets": [
-      "assets/app-C4GfVY-C.css",
+      "assets/app-Crk2hFOV.css",
       "assets/rubik-arabic-400-normal-D3urn6zm.woff2",
       "assets/rubik-arabic-400-normal-BO2HtqjK.woff",
       "assets/rubik-cyrillic-ext-400-normal-D-KNTwvG.woff2",
@@ -405,64 +420,79 @@
     ]
   },
   "src/routes/auth/login.tsx?tsr-split=component": {
-    "file": "assets/login-CypKLe8Z.js",
+    "file": "assets/login-Bqyo4VwD.js",
     "name": "login",
     "src": "src/routes/auth/login.tsx?tsr-split=component",
     "isDynamicEntry": true,
     "imports": [
       "src/client.tsx",
-      "_useForm-CFfGqZw2.js"
+      "_useForm-CcPXm2vi.js",
+      "_input-z8qAEBEG.js"
     ]
   },
   "src/routes/auth/register.tsx?tsr-split=component": {
-    "file": "assets/register-BborNqcU.js",
+    "file": "assets/register-bKyq8c8j.js",
     "name": "register",
     "src": "src/routes/auth/register.tsx?tsr-split=component",
     "isDynamicEntry": true,
     "imports": [
       "src/client.tsx",
-      "_useForm-CFfGqZw2.js"
+      "_useForm-CcPXm2vi.js",
+      "_input-z8qAEBEG.js"
     ]
   },
   "src/routes/checkout.tsx?tsr-split=component": {
-    "file": "assets/checkout-C_KZ5qZ0.js",
+    "file": "assets/checkout-u97IHuZ8.js",
     "name": "checkout",
     "src": "src/routes/checkout.tsx?tsr-split=component",
     "isDynamicEntry": true,
     "imports": [
       "src/client.tsx",
-      "_useForm-CFfGqZw2.js",
-      "_clock-hbaKcCcr.js"
+      "_useForm-CcPXm2vi.js",
+      "_clock-BNKicMoG.js"
     ]
   },
   "src/routes/index.tsx?tsr-split=component": {
-    "file": "assets/index-Cx95Wxr0.js",
+    "file": "assets/index-BfoU2CJI.js",
     "name": "index",
     "src": "src/routes/index.tsx?tsr-split=component",
     "isDynamicEntry": true,
     "imports": [
-      "src/client.tsx"
+      "src/client.tsx",
+      "_card-D9YP67Ot.js"
     ]
   },
   "src/routes/orders/index.tsx?tsr-split=component": {
-    "file": "assets/index-Cib90tNR.js",
+    "file": "assets/index-C3QF_V1Y.js",
     "name": "index",
     "src": "src/routes/orders/index.tsx?tsr-split=component",
     "isDynamicEntry": true,
     "imports": [
       "src/client.tsx",
-      "_shopping-bag-CxxLREjg.js",
-      "_clock-hbaKcCcr.js"
+      "_shopping-bag-BB-ptptD.js",
+      "_clock-BNKicMoG.js"
     ]
   },
   "src/routes/orders/success.tsx?tsr-split=component": {
-    "file": "assets/success-Cr9UgQ9d.js",
+    "file": "assets/success-DyVOSRjp.js",
     "name": "success",
     "src": "src/routes/orders/success.tsx?tsr-split=component",
     "isDynamicEntry": true,
     "imports": [
       "src/client.tsx",
-      "_shopping-bag-CxxLREjg.js"
+      "_shopping-bag-BB-ptptD.js"
+    ]
+  },
+  "src/routes/profile/index.tsx?tsr-split=component": {
+    "file": "assets/index-BlDNaHGQ.js",
+    "name": "index",
+    "src": "src/routes/profile/index.tsx?tsr-split=component",
+    "isDynamicEntry": true,
+    "imports": [
+      "src/client.tsx",
+      "_useForm-CcPXm2vi.js",
+      "_input-z8qAEBEG.js",
+      "_card-D9YP67Ot.js"
     ]
   }
 }

@@ -1,5 +1,5 @@
 import { apiClient } from "./clients";
-import type { Category, Product, Order, CreateOrderData } from "../types/api";
+import type { Category, Product, Order, CreateOrderData, User } from "../types/api";
 
 export const categoriesApi = {
     getAll: () => apiClient.get<Category[]>('/categories/'),
@@ -24,4 +24,12 @@ export const ordersApi = {
     getAll: () => apiClient.get<Order[]>('/orders/'),
     updateStatus: (id: number, status: string) =>
         apiClient.patch<Order>(`/orders/${id}/update_status/`, { status }),
+};
+
+export const profileApi = {
+    get: () => apiClient.get<User>('/profile/'),
+    update: (data: { name?: string; address?: string }) =>
+        apiClient.patch<User>('/profile/update/', data),
+    changePassword: (data: { old_password: string; new_password: string; new_password_confirm: string }) =>
+        apiClient.post('/profile/change-password/', data),
 };

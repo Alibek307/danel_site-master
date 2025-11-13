@@ -217,7 +217,7 @@ export function RegistrationFrom() {
                                 value={field.state.value}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                placeholder="г. Алматы, ул. Абая 123"
+                                placeholder="г. Астана, ул. Абая 123"
                                 disabled={isLoading}
                                 aria-invalid={!!field.state.meta.errors.length}
                             />

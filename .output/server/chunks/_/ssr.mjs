@@ -1,13 +1,13 @@
 import { jsx, jsxs, Fragment } from 'react/jsx-runtime';
 import { useQuery, QueryClient, QueryClientProvider, dehydrate, hydrate } from '@tanstack/react-query';
-import { createRootRouteWithContext, Outlet, HeadContent, Scripts, createFileRoute, lazyRouteComponent, redirect as redirect$1, RouterProvider, Link, useRouter, useMatch, rootRouteId as rootRouteId$1, ErrorComponent, useLocation, useNavigate, createRouter as createRouter$1 } from '@tanstack/react-router';
+import { createRootRouteWithContext, Outlet, HeadContent, Scripts, createFileRoute, lazyRouteComponent, redirect, RouterProvider, Link, useRouter, useMatch, rootRouteId as rootRouteId$1, ErrorComponent, useLocation, useNavigate, createRouter as createRouter$1 } from '@tanstack/react-router';
 import * as React from 'react';
 import { createContext, useEffect, useContext, useState, Fragment as Fragment$1 } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Slot } from '@radix-ui/react-slot';
 import { cva } from 'class-variance-authority';
-import { ChefHat, Salad, Flame, Cookie, Cake, Phone, Mail, Instagram, MapPin, Monitor, Moon, Sun, Languages, PanelLeftOpen, PanelLeftClose, User, Settings, LogOut, ShoppingCart, Minus, Plus, Trash2, XIcon } from 'lucide-react';
+import { ChefHat, Salad, Flame, Cookie, Cake, Phone, Mail, MessageCircle, Instagram, MapPin, Monitor, Moon, Sun, Languages, PanelLeftOpen, PanelLeftClose, User, Settings, LogOut, ShoppingCart, Minus, Plus, Trash2, XIcon } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
@@ -2875,7 +2875,7 @@ async function loadVirtualModule(id) {
     case VIRTUAL_MODULES.routeTree:
       return await Promise.resolve().then(() => routeTree_gen);
     case VIRTUAL_MODULES.startManifest:
-      return await import('./_tanstack-start-manifest_v-B7bzHneg.mjs');
+      return await import('./_tanstack-start-manifest_v-CMFn7PIO.mjs');
     case VIRTUAL_MODULES.serverFnManifest:
       return await import('./_tanstack-start-server-fn-manifest_v-DtgTK7xl.mjs');
     default:
@@ -4840,7 +4840,7 @@ function NotFound({ children }) {
     ] })
   ] });
 }
-const appCss = "/assets/app-C4GfVY-C.css";
+const appCss = "/assets/app-Crk2hFOV.css";
 const getBaseMeta = ({
   title,
   description,
@@ -6135,6 +6135,7 @@ const useAuthStore = create()(
           user: response.customer,
           tokens: response.tokens
         });
+        await new Promise((resolve) => setTimeout(resolve, 50));
       },
       register: async (data) => {
         const response = await authApi.register(data);
@@ -6145,6 +6146,9 @@ const useAuthStore = create()(
       },
       logout: () => {
         set({ user: null, tokens: null });
+      },
+      updateUser: (user) => {
+        set({ user });
       }
     }),
     {
@@ -6226,6 +6230,11 @@ const ordersApi = {
   create: (data) => apiClient.post("/orders/create_order/", data),
   getAll: () => apiClient.get("/orders/"),
   updateStatus: (id, status) => apiClient.patch(`/orders/${id}/update_status/`, { status })
+};
+const profileApi = {
+  get: () => apiClient.get("/profile/"),
+  update: (data) => apiClient.patch("/profile/update/", data),
+  changePassword: (data) => apiClient.post("/profile/change-password/", data)
 };
 const useProducts = (categoryId) => {
   return useQuery({
@@ -6349,11 +6358,11 @@ function Footer() {
     /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4", children: "Danel" }),
-        /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-4", children: "Система заказа продкутов для бизнеса. Качественная продукция с доставкой." })
+        /* @__PURE__ */ jsx("p", { className: "text-sm text-muted-foreground mb-4", children: "Система заказа продуктов для бизнеса. Качественная продукция с доставкой." })
       ] }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4", children: "Контакты" }),
-        /* @__PURE__ */ jsxs("div", { className: "sapce-y-3", children: [
+        /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
           /* @__PURE__ */ jsxs(
             "a",
             {
@@ -6368,7 +6377,7 @@ function Footer() {
           /* @__PURE__ */ jsxs(
             "a",
             {
-              href: "malito:info@danel.kz",
+              href: "mailto:info@danel.kz",
               className: "flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors",
               children: [
                 /* @__PURE__ */ jsx(Mail, { className: "w-4 h-4" }),
@@ -6379,13 +6388,26 @@ function Footer() {
           /* @__PURE__ */ jsxs(
             "a",
             {
+              href: "https://wa.me/77475115555",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              className: "flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors",
+              children: [
+                /* @__PURE__ */ jsx(MessageCircle, { className: "w-4 h-4" }),
+                "WhatsApp"
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxs(
+            "a",
+            {
               href: "https://www.instagram.com/pirogi_danel_astana/",
               target: "_blank",
-              rel: "noopener onreferrer",
+              rel: "noopener noreferrer",
               className: "flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors",
               children: [
                 /* @__PURE__ */ jsx(Instagram, { className: "w-4 h-4" }),
-                "@danel.kz"
+                "@pirogi_danel_astana"
               ]
             }
           )
@@ -6393,10 +6415,19 @@ function Footer() {
       ] }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4", children: "Адрес" }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-sm text-muted-foreground", children: [
-          /* @__PURE__ */ jsx(MapPin, { className: "w-4 h-4" }),
-          /* @__PURE__ */ jsx("span", { children: 'Казахстан, г. Астана, ул. Сыганак 54а, БЦ "А"' })
-        ] })
+        /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2 text-sm text-muted-foreground", children: /* @__PURE__ */ jsxs(
+          "a",
+          {
+            href: "https://www.instagram.com/pirogi_danel_astana/",
+            target: "_blank",
+            rel: "noopener onreferrer",
+            className: "flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors",
+            children: [
+              /* @__PURE__ */ jsx(MapPin, { className: "w-4 h-4" }),
+              /* @__PURE__ */ jsx("span", { children: 'Казахстан, г. Астана, ул. Сыганак 54а, БЦ "А"' })
+            ]
+          }
+        ) })
       ] }),
       /* @__PURE__ */ jsxs("div", { children: [
         /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4", children: "Навигация" }),
@@ -6478,7 +6509,7 @@ function AppLayout({ children }) {
     /* @__PURE__ */ jsx(Toaster, {})
   ] });
 }
-const Route$6 = createRootRouteWithContext()({
+const Route$7 = createRootRouteWithContext()({
   head: () => {
     const baseMeta = getBaseMeta({
       title: /* @__PURE__ */ seo_home_title(),
@@ -6576,8 +6607,8 @@ function RootDocument({ children }) {
     ] })
   ] });
 }
-const $$splitComponentImporter$5 = () => import('./checkout-DUpguBvC.mjs');
-const Route$5 = createFileRoute("/checkout")({
+const $$splitComponentImporter$6 = () => import('./checkout-DnUfZpLX.mjs');
+const Route$6 = createFileRoute("/checkout")({
   // beforeload выполняется ДО загрузки страницы
   beforeLoad: ({
     context,
@@ -6585,7 +6616,7 @@ const Route$5 = createFileRoute("/checkout")({
   }) => {
     const authStore = useAuthStore.getState();
     if (!authStore.tokens?.access || !authStore.user) {
-      throw redirect$1({
+      throw redirect({
         to: "/auth/login",
         search: {
           // Сохраняем текущий URL, чтобы после логина вернуться сюда
@@ -6594,10 +6625,10 @@ const Route$5 = createFileRoute("/checkout")({
       });
     }
   },
-  component: lazyRouteComponent($$splitComponentImporter$5, "component")
+  component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$4 = () => import('./index-yjYZAE7s.mjs');
-const Route$4 = createFileRoute("/")({
+const $$splitComponentImporter$5 = () => import('./index-CQGYMpww.mjs');
+const Route$5 = createFileRoute("/")({
   head: () => {
     const baseMeta = getBaseMeta({
       title: /* @__PURE__ */ seo_home_title(),
@@ -6605,6 +6636,23 @@ const Route$4 = createFileRoute("/")({
       keywords: /* @__PURE__ */ seo_home_keywords()
     });
     return combineSEO(baseMeta);
+  },
+  component: lazyRouteComponent($$splitComponentImporter$5, "component")
+});
+const $$splitComponentImporter$4 = () => import('./index-CwG8jHG3.mjs');
+const Route$4 = createFileRoute("/profile/")({
+  beforeLoad: ({
+    location
+  }) => {
+    const authStore = useAuthStore.getState();
+    if (!authStore.tokens?.access || !authStore.user) {
+      throw redirect({
+        to: "/auth/login",
+        search: {
+          redirect: location.href
+        }
+      });
+    }
   },
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
@@ -6633,50 +6681,55 @@ const Route$2 = createFileRoute("/orders/success")({
 const requireGuest = () => {
   const authStore = useAuthStore.getState();
   if (authStore.tokens?.access && authStore.user) {
-    throw redirect$1({
+    throw redirect({
       to: "/"
     });
   }
 };
-const $$splitComponentImporter$1 = () => import('./register-h6iiJI6t.mjs');
+const $$splitComponentImporter$1 = () => import('./register-D-hXryfA.mjs');
 const Route$1 = createFileRoute("/auth/register")({
   component: lazyRouteComponent($$splitComponentImporter$1, "component"),
   beforeLoad: requireGuest
 });
-const $$splitComponentImporter = () => import('./login-D6TG9eVv.mjs');
+const $$splitComponentImporter = () => import('./login-CnqlFynv.mjs');
 const Route = createFileRoute("/auth/login")({
   beforeLoad: requireGuest,
   component: lazyRouteComponent($$splitComponentImporter, "component")
 });
-const CheckoutRoute = Route$5.update({
+const CheckoutRoute = Route$6.update({
   id: "/checkout",
   path: "/checkout",
-  getParentRoute: () => Route$6
+  getParentRoute: () => Route$7
 });
-const IndexRoute = Route$4.update({
+const IndexRoute = Route$5.update({
   id: "/",
   path: "/",
-  getParentRoute: () => Route$6
+  getParentRoute: () => Route$7
+});
+const ProfileIndexRoute = Route$4.update({
+  id: "/profile/",
+  path: "/profile/",
+  getParentRoute: () => Route$7
 });
 const OrdersIndexRoute = Route$3.update({
   id: "/orders/",
   path: "/orders/",
-  getParentRoute: () => Route$6
+  getParentRoute: () => Route$7
 });
 const OrdersSuccessRoute = Route$2.update({
   id: "/orders/success",
   path: "/orders/success",
-  getParentRoute: () => Route$6
+  getParentRoute: () => Route$7
 });
 const AuthRegisterRoute = Route$1.update({
   id: "/auth/register",
   path: "/auth/register",
-  getParentRoute: () => Route$6
+  getParentRoute: () => Route$7
 });
 const AuthLoginRoute = Route.update({
   id: "/auth/login",
   path: "/auth/login",
-  getParentRoute: () => Route$6
+  getParentRoute: () => Route$7
 });
 const rootRouteChildren = {
   IndexRoute,
@@ -6684,9 +6737,10 @@ const rootRouteChildren = {
   AuthLoginRoute,
   AuthRegisterRoute,
   OrdersSuccessRoute,
-  OrdersIndexRoute
+  OrdersIndexRoute,
+  ProfileIndexRoute
 };
-const routeTree = Route$6._addFileChildren(rootRouteChildren)._addFileTypes();
+const routeTree = Route$7._addFileChildren(rootRouteChildren)._addFileTypes();
 const routeTree_gen = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   routeTree
@@ -6720,5 +6774,5 @@ const serverEntry = defineEventHandler(function(event) {
   return serverEntry$1({ request });
 });
 
-export { Button as B, GradientButton as G, useAuthStore as a, useCategories as b, cn as c, useProducts as d, serverEntry as default, ordersApi as o, transformProduct as t, useCartStore as u };
+export { Button as B, GradientButton as G, useAuthStore as a, useCategories as b, cn as c, useProducts as d, serverEntry as default, ordersApi as o, profileApi as p, transformProduct as t, useCartStore as u };
 //# sourceMappingURL=ssr.mjs.map

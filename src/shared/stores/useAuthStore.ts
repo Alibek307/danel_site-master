@@ -9,6 +9,7 @@ interface AuthStore {
     login: (email: string, password: string) => Promise<void>;
     register: (data: RegisterRequest) => Promise<void>;
     logout: () => void;
+    updateUser: (user: User) => void;
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -19,10 +20,15 @@ export const useAuthStore = create<AuthStore>()(
             
             login: async (email: string, password: string) => {
                 const response = await authApi.login({ email, password });
+
                 set({
                     user: response.customer,
                     tokens: response.tokens,
                 });
+
+                // Zustand persist автоматически сохранит в localStorage
+                // Ждем немного, чтобы persist middleware успел записать
+                await new Promise(resolve => setTimeout(resolve, 50));
             },
 
             register: async (data: RegisterRequest) => {
@@ -35,6 +41,10 @@ export const useAuthStore = create<AuthStore>()(
 
             logout: () => {
                 set({ user: null, tokens: null });
+            },
+
+            updateUser: (user: User) => {
+                set({ user });
             },
         }),
         {

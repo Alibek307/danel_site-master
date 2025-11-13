@@ -1,8 +1,9 @@
 import { jsx, jsxs } from 'react/jsx-runtime';
-import { u as useCartStore, b as useCategories, d as useProducts, t as transformProduct, G as GradientButton, c as cn } from './ssr.mjs';
+import { u as useCartStore, b as useCategories, d as useProducts, t as transformProduct, G as GradientButton } from './ssr.mjs';
 import { toast } from 'sonner';
 import { useMemo } from 'react';
 import { Plus } from 'lucide-react';
+import { C as Card, a as CardContent } from './card-CvYRv4d7.mjs';
 import '@tanstack/react-query';
 import '@tanstack/react-router';
 import 'zustand';
@@ -66,29 +67,6 @@ function ProductCard({ product, onAddToCart }) {
     ] })
   ] });
 }
-function Card({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card",
-      className: cn(
-        "bg-card text-card-foreground flex flex-col gap-1 rounded-xl border py-4 shadow-sm",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardContent({ className, ...props }) {
-  return /* @__PURE__ */ jsx(
-    "div",
-    {
-      "data-slot": "card-content",
-      className: cn("px-6", className),
-      ...props
-    }
-  );
-}
 const SplitComponent = function RouteComponent() {
   const addItem = useCartStore((state) => state.addItem);
   const {
@@ -143,4 +121,4 @@ const SplitComponent = function RouteComponent() {
 };
 
 export { SplitComponent as component };
-//# sourceMappingURL=index-yjYZAE7s.mjs.map
+//# sourceMappingURL=index-CQGYMpww.mjs.map
